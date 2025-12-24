@@ -26,7 +26,6 @@ def preprocess_for_inference(df, artifacts):
 
     return df
 
-
 def predict(df, model, artifacts):
     X = preprocess_for_inference(df, artifacts)
     return model.predict_proba(X)[:, 1]
