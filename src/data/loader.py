@@ -11,4 +11,7 @@ def load_training_data() -> pd.DataFrame:
 
     # 🚨 CRITICAL: drop rows with missing target
     df = df.dropna(subset=[TARGET_COL])
+    
+    # 🔑 CRITICAL: convert pd.NA → np.nan for sklearn
+    df = df.replace({pd.NA: np.nan})
     return df
