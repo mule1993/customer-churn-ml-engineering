@@ -14,7 +14,12 @@ logger = logging.getLogger(__name__)
 def split_data(df):
     X = df.drop(columns=[TARGET_COL])
     y = df[TARGET_COL]
-    y = y.astype(int)
+    
+    # Encode target explicitly
+    y = y.map({"No": 0, "Yes": 1})
+    if y.isna().any():
+      raise ValueError("Target contains invalid or missing values after encoding")
+
     assert not y.isna().any(), "Target contains NA"
     assert X.isna().sum().sum() >= 0  # allowed
     return train_test_split(X, y, test_size=TEST_SIZE, random_state=RANDOM_STATE, stratify=y)
