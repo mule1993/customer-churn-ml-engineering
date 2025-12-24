@@ -4,8 +4,8 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.impute import SimpleImputer
 
 def build_preprocessor():
-    numeric_features = ["tenure", "MonthlyCharges", "TotalCharges"]
-    categorical_features = ["gender","Partner","Dependents","PhoneService","InternetService","Contract","PaymentMethod"]
+    numeric_features = X.select_dtypes(include=["int64", "float64"]).columns
+    categorical_features = X.select_dtypes(include=["object", "category"]).columns
 
     numeric_pipeline = Pipeline([
         ("imputer", SimpleImputer(strategy="median")),
