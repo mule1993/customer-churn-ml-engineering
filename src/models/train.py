@@ -1,30 +1,32 @@
-import joblib
-from pathlib import Path
+from sklearn.model_selection import train_test_split
 
-from xgboost import XGBClassifier
+from src.data.loader import load_data
+from src.features.preprocess import build_preprocessor
+from src.models.evaluate import evaluate_model
 
+def train(config):
+    df = load_data(config.data_path)
 
-def train_model(X_train, y_train, output_dir: Path):
-    """
-    Train churn model and save artifact.
+    X = df.drop(columns=[config.target])
+    y = df[config.target]
 
-    Returns
-    -------
-    model : trained model
-    """
-
-    model = XGBClassifier(
-        use_label_encoder=False,
-        eval_metric="logloss",
-        random_state=42
+    # ✅ Train / test split lives here
+    X_train, X_test, y_train, y_test = train_test_split(
+        X,
+        y,
+        test_size=config.test_size,
+        random_state=config.random_state,
+        stratify=y
     )
 
-    model.fit(X_train, y_train)
+    preprocessor = build_preprocessor()
+    X_train_proc = preprocessor.fit_transform(X_train)
+    X_test_proc = preprocessor.transform(X_test)
 
-    output_dir.mkdir(parents=True, exist_ok=True)
+    model = build_model(config)
+    model.fit(X_train_proc, y_train)
 
-    model_path = output_dir / "churn_model.joblib"
-    joblib.dump(model, model_path)
+    evaluate_model(model, X_test_proc, y_test)
 
-    return model
+    save_artifacts(model, preprocessor)
 
