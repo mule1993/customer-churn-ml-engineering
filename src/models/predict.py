@@ -1,31 +1,13 @@
 import joblib
 import pandas as pd
+from src.config import MODELS_DIR
 
+def load_artifacts():
+    model = joblib.load(MODELS_DIR / "model.joblib")
+    preprocessor = joblib.load(MODELS_DIR / "preprocessor.joblib")
+    return model, preprocessor
 
-def load_artifacts(model_path, preprocess_path):
-    model = joblib.load(model_path)
-    artifacts = joblib.load(preprocess_path)
-    return model, artifacts
-
-def preprocess_for_inference(df, artifacts):
-    df = df.copy()
-
-    # Drop ID column if present
-    if "customerID" in df.columns:
-        df = df.drop(columns=["customerID"])
-
-    # Encode categoricals
-    for col, encoder in artifacts["encoders"].items():
-        if col in df.columns:
-            df[col] = encoder.transform(df[col])
-
-    # Scale numerics
-    df[artifacts["numeric_cols"]] = artifacts["scaler"].transform(
-        df[artifacts["numeric_cols"]]
-    )
-
-    return df
-
-def predict(df, model, artifacts):
-    X = preprocess_for_inference(df, artifacts)
-    return model.predict_proba(X)[:, 1]
+def predict(df: pd.DataFrame):
+    model, preprocessor = load_artifacts()
+    X_p = preprocessor.transform(df)
+    return model.predict(X_p)
