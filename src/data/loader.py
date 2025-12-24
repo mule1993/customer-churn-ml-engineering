@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 from src.config import DATA_PATH, TARGET_COL
 
 def load_training_data() -> pd.DataFrame:
