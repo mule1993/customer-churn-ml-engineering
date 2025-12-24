@@ -3,7 +3,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.impute import SimpleImputer
 
-def build_preprocessor():
+def build_preprocessor(X):
     numeric_features = X.select_dtypes(include=["int64", "float64"]).columns
     categorical_features = X.select_dtypes(include=["object", "category"]).columns
 
