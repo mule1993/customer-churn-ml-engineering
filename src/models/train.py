@@ -20,6 +20,8 @@ def split_data(df):
     return train_test_split(X, y, test_size=TEST_SIZE, random_state=RANDOM_STATE, stratify=y)
 
 def train_model(X_train, y_train):
+    print("X dtypes:\n", X_train.dtypes)
+    print("y unique values:", y_train.unique())
     preprocessor = build_preprocessor(X_train)
     X_train_p = preprocessor.fit_transform(X_train)
     model = XGBClassifier(n_estimators=300, max_depth=6, learning_rate=0.05,
