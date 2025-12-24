@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 def split_data(df):
     X = df.drop(columns=[TARGET_COL])
     y = df[TARGET_COL]
-    #y = y.astype(int)
+    y = y.astype(int)
     assert not y.isna().any(), "Target contains NA"
     assert X.isna().sum().sum() >= 0  # allowed
     return train_test_split(X, y, test_size=TEST_SIZE, random_state=RANDOM_STATE, stratify=y)
