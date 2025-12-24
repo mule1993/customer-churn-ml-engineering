@@ -1,22 +1,8 @@
 import pandas as pd
+from src.config import DATA_PATH, TARGET_COL
 
-
-def load_csv(path: str) -> pd.DataFrame:
-    """
-    Load CSV data from a given path.
-
-    Parameters
-    ----------
-    path : str
-        Path to CSV file (local, Drive mount, or cloud-synced)
-
-    Returns
-    -------
-    pd.DataFrame
-    """
-    df = pd.read_csv(path)
-
-    if df.empty:
-        raise ValueError("Loaded dataframe is empty")
-
+def load_training_data() -> pd.DataFrame:
+    df = pd.read_csv(DATA_PATH)
+    if TARGET_COL not in df.columns:
+        raise ValueError(f"Target column '{TARGET_COL}' not found")
     return df
