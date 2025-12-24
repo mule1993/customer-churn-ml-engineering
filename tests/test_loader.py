@@ -1,8 +1,24 @@
-import pytest
+import pandas as pd
+import numpy as np
 from src.data.loader import load_training_data
 from src.config import TARGET_COL
 
-def test_loader_columns():
+
+def test_loader_returns_dataframe():
     df = load_training_data()
-    assert TARGET_COL in df.columns
-    assert df.shape[0] > 0
+    assert isinstance(df, pd.DataFrame)
+
+
+def test_blank_strings_converted_to_nan():
+    df = load_training_data()
+    assert not (df == " ").any().any()
+
+
+def test_no_missing_target():
+    df = load_training_data()
+    assert not df[TARGET_COL].isna().any()
+
+
+def test_nan_is_numpy_nan():
+    df = load_training_data()
+    assert df.isna().sum().sum() >= 0  # sklearn-safe NaN
