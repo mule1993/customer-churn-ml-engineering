@@ -2,7 +2,7 @@
 
 import pandas as pd
 
-from src.features.preprocessing import build_preprocessor
+from src.features.preprocess import build_preprocessor
 
 
 def test_preprocessor_excludes_target():
