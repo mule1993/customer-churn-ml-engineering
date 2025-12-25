@@ -7,6 +7,7 @@ from src.features.preprocess import build_preprocessor
 from src.models.evaluate import evaluate_model
 from src.config import TARGET_COL, TEST_SIZE, RANDOM_STATE, MODELS_DIR
 from src.utils.helpers import set_seed, ensure_dir
+from pathlib import Path
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(levelname)s | %(message)s")
 logger = logging.getLogger(__name__)
@@ -37,6 +38,8 @@ def train_model(X_train, y_train):
     return model, preprocessor
 
 def save_artifacts(model, preprocessor):
+    PROJECT_ROOT = Path(__file__).resolve().parents[2]
+    MODELS_DIR.mkdir(exist_ok=True)
     ensure_dir(MODELS_DIR)
     joblib.dump(model, MODELS_DIR / "model.joblib")
     joblib.dump(preprocessor, MODELS_DIR / "preprocessor.joblib")
