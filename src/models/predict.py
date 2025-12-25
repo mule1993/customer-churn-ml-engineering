@@ -32,8 +32,8 @@ def predict(df: pd.DataFrame):
     # --------------------------------------------------
     X_processed = preprocessor.transform(df)
     preds = model.predict(X_processed)
-
-  return pd.Series(preds, name="prediction")
+    
+    return pd.Series(preds, name="prediction")
 
 
 def run_batch(input_csv: Path, output_csv: Path) -> None:
