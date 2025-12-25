@@ -1,14 +1,14 @@
-# src/models/train.py
-
-from pathlib import Path
-import joblib
 import pandas as pd
+import logging
+import joblib
 from sklearn.model_selection import train_test_split
 from xgboost import XGBClassifier
-
 from src.data.loader import load_training_data
-from src.features.preprocessing import build_preprocessor
-
+from src.features.preprocess import build_preprocessor
+from src.models.evaluate import evaluate_model
+from src.config import TARGET_COL, TEST_SIZE, RANDOM_STATE, MODELS_DIR
+from src.utils.helpers import set_seed, ensure_dir
+from pathlib import Path
 
 # --------------------------------------------------
 # 🔒 Resolve project root safely (professional fix)
