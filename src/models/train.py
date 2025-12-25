@@ -1,3 +1,4 @@
+import pandas as pd
 import logging
 import joblib
 from sklearn.model_selection import train_test_split
@@ -9,50 +10,73 @@ from src.config import TARGET_COL, TEST_SIZE, RANDOM_STATE, MODELS_DIR
 from src.utils.helpers import set_seed, ensure_dir
 from pathlib import Path
 
-logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(levelname)s | %(message)s")
-logger = logging.getLogger(__name__)
+# --------------------------------------------------
+# 🔒 Resolve project root safely (professional fix)
+# --------------------------------------------------
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
+MODELS_DIR = PROJECT_ROOT / "models"
 MODELS_DIR.mkdir(exist_ok=True)
-#ensure_dir(MODELS_DIR)
-def split_data(df):
-    X = df.drop(columns=[TARGET_COL])
-    y = df[TARGET_COL]
-    
-    # Encode target explicitly
-    y = y.map({"No": 0, "Yes": 1})
-    if y.isna().any():
-      raise ValueError("Target contains invalid or missing values after encoding")
 
-    assert not y.isna().any(), "Target contains NA"
-    assert X.isna().sum().sum() >= 0  # allowed
-    return train_test_split(X, y, test_size=TEST_SIZE, random_state=RANDOM_STATE, stratify=y)
-
-def train_model(X_train, y_train):
-    print("X dtypes:\n", X_train.dtypes)
-    print("y unique values:", y_train.unique())
-    preprocessor = build_preprocessor(X_train)
-    X_train_p = preprocessor.fit_transform(X_train)
-    model = XGBClassifier(n_estimators=300, max_depth=6, learning_rate=0.05,
-                          subsample=0.8, colsample_bytree=0.8,
-                          objective="binary:logistic", eval_metric="logloss",
-                          random_state=RANDOM_STATE, n_jobs=-1)
-    model.fit(X_train_p, y_train)
-    return model, preprocessor
-
-def save_artifacts(model, preprocessor):
-    joblib.dump(model, MODELS_DIR / "model.joblib")
-    joblib.dump(preprocessor, MODELS_DIR / "preprocessor.joblib")
-    logger.info("Artifacts saved successfully")
 
 def main():
-    set_seed(RANDOM_STATE)
-    logger.info("Starting training pipeline")
+    # --------------------------------------------------
+    # 1️⃣ Load data
+    # --------------------------------------------------
     df = load_training_data()
-    X_train, X_test, y_train, y_test = split_data(df)
-    model, preprocessor = train_model(X_train, y_train)
-    evaluate_model(model, preprocessor, X_test, y_test)
-    save_artifacts(model, preprocessor)
-    logger.info("Training pipeline completed")
+
+    # Defensive cleanup
+    df = df.replace(" ", pd.NA)
+
+    target_col = "Churn"
+    X = df.drop(columns=[target_col])
+    y = df[target_col]
+
+    # Normalize target
+    y = y.map({"Yes": 1, "No": 0}).astype(int)
+
+    # --------------------------------------------------
+    # 2️⃣ Train / test split
+    # --------------------------------------------------
+    X_train, X_test, y_train, y_test = train_test_split(
+        X,
+        y,
+        test_size=0.2,
+        random_state=42,
+        stratify=y
+    )
+
+    # --------------------------------------------------
+    # 3️⃣ Preprocessing
+    # --------------------------------------------------
+    preprocessor = build_preprocessor(X_train)
+
+    X_train_p = preprocessor.fit_transform(X_train)
+    X_test_p = preprocessor.transform(X_test)
+
+    # --------------------------------------------------
+    # 4️⃣ Model training
+    # --------------------------------------------------
+    model = XGBClassifier(
+        n_estimators=200,
+        max_depth=5,
+        learning_rate=0.05,
+        subsample=0.8,
+        colsample_bytree=0.8,
+        eval_metric="logloss",
+        random_state=42
+    )
+
+    model.fit(X_train_p, y_train)
+
+    # --------------------------------------------------
+    # 5️⃣ Save artifacts (INSIDE PROJECT)
+    # --------------------------------------------------
+    joblib.dump(preprocessor, MODELS_DIR / "preprocessor.joblib")
+    joblib.dump(model, MODELS_DIR / "model.joblib")
+
+    print("✅ Training complete")
+    print(f"📦 Artifacts saved to: {MODELS_DIR}")
+
 
 if __name__ == "__main__":
     main()
