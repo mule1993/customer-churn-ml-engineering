@@ -2,14 +2,10 @@
 
 from pathlib import Path
 import pandas as pd
-import joblib
 
 from src.models.predict import predict
 
 
-# --------------------------------------------------
-# Resolve project root the SAME WAY as train.py
-# --------------------------------------------------
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 MODELS_DIR = PROJECT_ROOT / "models"
 
@@ -17,22 +13,20 @@ MODELS_DIR = PROJECT_ROOT / "models"
 def test_predict_runs_and_returns_output():
     """
     Smoke-level inference test.
-    Assumes train.py has already been run and artifacts exist.
+    Assumes train.py has already been run.
     """
 
     # --------------------------------------------------
     # 1️⃣ Assert artifacts exist
     # --------------------------------------------------
-    model_path = MODELS_DIR / "model.joblib"
-    preprocessor_path = MODELS_DIR / "preprocessor.joblib"
-
-    assert model_path.exists(), "❌ model.joblib not found. Run train.py first."
-    assert preprocessor_path.exists(), "❌ preprocessor.joblib not found. Run train.py first."
+    assert (MODELS_DIR / "model.joblib").exists()
+    assert (MODELS_DIR / "preprocessor.joblib").exists()
 
     # --------------------------------------------------
-    # 2️⃣ Create minimal valid input
+    # 2️⃣ Minimal valid input (MATCHES TRAIN SCHEMA)
     # --------------------------------------------------
     sample = pd.DataFrame([{
+        "customerID": "0001-A",
         "gender": "Female",
         "SeniorCitizen": 0,
         "Partner": "Yes",
@@ -64,5 +58,4 @@ def test_predict_runs_and_returns_output():
     # --------------------------------------------------
     assert preds is not None
     assert len(preds) == 1
-    assert preds[0] in [0, 1]
-
+    assert preds[0] in (0, 1)
