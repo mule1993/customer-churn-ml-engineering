@@ -11,7 +11,9 @@ from pathlib import Path
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(levelname)s | %(message)s")
 logger = logging.getLogger(__name__)
-
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+MODELS_DIR.mkdir(exist_ok=True)
+#ensure_dir(MODELS_DIR)
 def split_data(df):
     X = df.drop(columns=[TARGET_COL])
     y = df[TARGET_COL]
@@ -38,9 +40,6 @@ def train_model(X_train, y_train):
     return model, preprocessor
 
 def save_artifacts(model, preprocessor):
-    PROJECT_ROOT = Path(__file__).resolve().parents[2]
-    MODELS_DIR.mkdir(exist_ok=True)
-    ensure_dir(MODELS_DIR)
     joblib.dump(model, MODELS_DIR / "model.joblib")
     joblib.dump(preprocessor, MODELS_DIR / "preprocessor.joblib")
     logger.info("Artifacts saved successfully")
