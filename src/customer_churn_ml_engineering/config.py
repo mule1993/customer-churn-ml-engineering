@@ -20,6 +20,7 @@ PROJECT_ROOT = find_project_root()
 # Standard directories
 #ARTIFACTS_DIR = PROJECT_ROOT / "artifacts"
 MODELS_DIR = PROJECT_ROOT / "models"
+ARTIFACTS_DIR = PROJECT_ROOT / "models"
 METRICS_DIR = PROJECT_ROOT / "metrics"
 DATA_PATH = PROJECT_ROOT / "data" / "raw" / "churn.csv"
 
