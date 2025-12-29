@@ -42,7 +42,7 @@ def main():
     # --------------------------------------------------
     # 3️⃣ Preprocessing
     # --------------------------------------------------
-    preprocessor = build_preprocessor(X_train)
+    preprocessor = build_preprocessor(df)
 
     X_train_p = preprocessor.fit_transform(X_train)
     X_test_p = preprocessor.transform(X_test)
