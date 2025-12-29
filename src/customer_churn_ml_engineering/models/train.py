@@ -3,11 +3,11 @@ import logging
 import joblib
 from sklearn.model_selection import train_test_split
 from xgboost import XGBClassifier
-from src.data.loader import load_training_data
-from src.features.preprocess import build_preprocessor
-from src.models.evaluate import evaluate_model
-from src.config import TARGET_COL, TEST_SIZE, RANDOM_STATE, MODELS_DIR
-from src.utils.helpers import set_seed, ensure_dir
+from src.customer_churn_ml_engineering.data.loader import load_training_data
+from src.customer_churn_ml_engineering.features.preprocess import build_preprocessor
+from src.customer_churn_ml_engineering.models.evaluate import evaluate_model
+from src.customer_churn_ml_engineering.config import TARGET_COL, TEST_SIZE, RANDOM_STATE, MODELS_DIR
+from src.customer_churn_ml_engineering.utils.helpers import set_seed, ensure_dir
 from pathlib import Path
 
 # --------------------------------------------------

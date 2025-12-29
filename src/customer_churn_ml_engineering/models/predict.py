@@ -4,7 +4,7 @@ from pathlib import Path
 import joblib
 import pandas as pd
 import sys
-from src.utils.schema import validate_schema
+from src.customer_churn_ml_engineering.utils.schema import validate_schema
 
 # --------------------------------------------------
 # Resolve project root safely

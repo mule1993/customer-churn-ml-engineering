@@ -1,5 +1,5 @@
-from src.data.loader import load_training_data
-from src.config import TARGET_COL
+from src.customer_churn_ml_engineering.data.loader import load_training_data
+from src.customer_churn_ml_engineering.config import TARGET_COL
 
 
 def test_target_is_binary_encoded():

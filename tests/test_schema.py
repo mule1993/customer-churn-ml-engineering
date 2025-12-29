@@ -3,7 +3,7 @@
 import pandas as pd
 import pytest
 
-from src.utils.schema import validate_schema
+from src.customer_churn_ml_engineering.utils.schema import validate_schema
 
 
 def test_schema_missing_column():

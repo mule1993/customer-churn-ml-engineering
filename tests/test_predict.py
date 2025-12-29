@@ -3,7 +3,7 @@
 from pathlib import Path
 import pandas as pd
 
-from src.models.predict import predict
+from src.customer_churn_ml_engineering.models.predict import predict
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]

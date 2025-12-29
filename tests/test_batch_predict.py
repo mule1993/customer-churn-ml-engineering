@@ -3,7 +3,7 @@
 import pandas as pd
 from pathlib import Path
 
-from src.models.predict import run_batch
+from src.customer_churn_ml_engineering.models.predict import run_batch
 
 
 def test_batch_inference(tmp_path):

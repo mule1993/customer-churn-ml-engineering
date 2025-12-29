@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from src.config import DATA_PATH, TARGET_COL
+from src.customer_churn_ml_engineering.config import DATA_PATH, TARGET_COL
 
 def load_training_data() -> pd.DataFrame:
     df = pd.read_csv(DATA_PATH)
