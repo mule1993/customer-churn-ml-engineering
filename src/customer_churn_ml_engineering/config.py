@@ -21,7 +21,7 @@ PROJECT_ROOT = find_project_root()
 #ARTIFACTS_DIR = PROJECT_ROOT / "artifacts"
 MODELS_DIR = PROJECT_ROOT / "models"
 METRICS_DIR = PROJECT_ROOT / "metrics"
-DATA_PATH = PROJECT_ROOT / "data" / "raw" / "churn.csv"
+#DATA_PATH = PROJECT_ROOT / "data" / "raw" / "churn.csv"
 
 # Ensure dirs exist (safe in prod & tests)
 for d in [

@@ -7,6 +7,12 @@ import sys
 from src.customer_churn_ml_engineering.utils.schema import validate_schema
 from src.customer_churn_ml_engineering.config import MODELS_DIR
 
+def predict_single(df, model, preprocessor):
+    X = preprocessor.transform(df)
+    prob = model.predict_proba(X)[0, 1]
+    pred = int(prob >= 0.5)
+    return prob, pred
+
 def predict(df: pd.DataFrame):
     """
     Run inference on input dataframe.
