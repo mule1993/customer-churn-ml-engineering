@@ -5,13 +5,7 @@ import joblib
 import pandas as pd
 import sys
 from src.customer_churn_ml_engineering.utils.schema import validate_schema
-
-# --------------------------------------------------
-# Resolve project root safely
-# --------------------------------------------------
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
-MODELS_DIR = PROJECT_ROOT / "models"
-
+from src.customer_churn_ml_engineering.config import MODELS_DIR
 
 def predict(df: pd.DataFrame):
     """

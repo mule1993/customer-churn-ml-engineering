@@ -8,7 +8,7 @@ def test_train_creates_artifacts():
     """Training should create model and preprocessor artifacts"""
 
     result = subprocess.run(
-        [sys.executable, "-m", "src.customer-churn-ml-engineering.models.train"],
+        [sys.executable, "-m", "src.customer_churn_ml_engineering.models.train"],
         capture_output=True,
         text=True,
     )

@@ -18,9 +18,9 @@ def find_project_root(marker_files=("pyproject.toml", "setup.cfg", ".git")):
 PROJECT_ROOT = find_project_root()
 
 # Standard directories
-ARTIFACTS_DIR = PROJECT_ROOT / "artifacts"
-MODELS_DIR = ARTIFACTS_DIR / "models"
-METRICS_DIR = ARTIFACTS_DIR / "metrics"
+#ARTIFACTS_DIR = PROJECT_ROOT / "artifacts"
+MODELS_DIR = PROJECT_ROOT / "models"
+METRICS_DIR = PROJECT_ROOT / "metrics"
 DATA_PATH = PROJECT_ROOT / "data" / "raw" / "churn.csv"
 
 # Ensure dirs exist (safe in prod & tests)
@@ -28,7 +28,7 @@ for d in [
     #DATA_DIR,
     #RAW_DATA_DIR,
     #PROCESSED_DATA_DIR,
-    ARTIFACTS_DIR,
+    #ARTIFACTS_DIR,
     MODELS_DIR,
     METRICS_DIR,
     #DATA_PATH,
