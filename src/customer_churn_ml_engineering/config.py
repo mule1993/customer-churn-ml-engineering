@@ -31,6 +31,6 @@ for d in [
     ARTIFACTS_DIR,
     MODELS_DIR,
     METRICS_DIR,
-    DATA_PATH,
+    #DATA_PATH,
 ]:
     d.mkdir(parents=True, exist_ok=True)
