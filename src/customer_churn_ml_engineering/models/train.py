@@ -10,12 +10,6 @@ from src.customer_churn_ml_engineering.config import TARGET_COL, TEST_SIZE, RAND
 from src.customer_churn_ml_engineering.utils.helpers import set_seed, ensure_dir
 from pathlib import Path
 
-# --------------------------------------------------
-# 🔒 Resolve project root safely (professional fix)
-# --------------------------------------------------
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
-MODELS_DIR = PROJECT_ROOT / "models"
-MODELS_DIR.mkdir(exist_ok=True)
 
 
 def main():
