@@ -22,7 +22,7 @@ def main():
     df = df.replace(" ", pd.NA)
 
     target_col = "Churn"
-    X = df.drop(columns=[target_col])
+    X = df.drop(columns=[target_col,"customerID"])
     y = df[target_col]
 
     # Normalize target
@@ -42,7 +42,7 @@ def main():
     # --------------------------------------------------
     # 3️⃣ Preprocessing
     # --------------------------------------------------
-    preprocessor = build_preprocessor(df)
+    preprocessor = build_preprocessor(X)
 
     X_train_p = preprocessor.fit_transform(X_train)
     X_test_p = preprocessor.transform(X_test)
