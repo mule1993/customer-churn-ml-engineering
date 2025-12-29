@@ -25,11 +25,12 @@ DATA_PATH = PROJECT_ROOT / "data" / "raw" / "churn.csv"
 
 # Ensure dirs exist (safe in prod & tests)
 for d in [
-    DATA_DIR,
-    RAW_DATA_DIR,
-    PROCESSED_DATA_DIR,
+    #DATA_DIR,
+    #RAW_DATA_DIR,
+    #PROCESSED_DATA_DIR,
     ARTIFACTS_DIR,
     MODELS_DIR,
     METRICS_DIR,
+    DATA_PATH,
 ]:
     d.mkdir(parents=True, exist_ok=True)
