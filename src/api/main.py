@@ -19,8 +19,8 @@ app = FastAPI(
 # Load artifacts ONCE
 # -----------------------------
 try:
-    model = joblib.load(ARTIFACTS_DIR / "model.pkl")
-    preprocessor = joblib.load(ARTIFACTS_DIR / "preprocessor.pkl")
+    model = joblib.load(ARTIFACTS_DIR / "model.joblib")
+    preprocessor = joblib.load(ARTIFACTS_DIR / "preprocessor.joblib")
 except Exception as e:
     raise RuntimeError(f"Failed to load model artifacts: {e}")
 
