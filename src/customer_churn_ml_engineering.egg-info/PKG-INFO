@@ -1,0 +1,30 @@
+Metadata-Version: 2.4
+Name: customer-churn-ml-engineering
+Version: 0.1.0
+Summary: Customer churn ML project with full pipeline, inference, and packaging
+Author-email: Muluneh Gashaw Teklu <muluneh.gashaw@gmail.com>
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: pandas>=1.5
+Requires-Dist: scikit-learn>=1.2
+Requires-Dist: xgboost>=1.7
+Requires-Dist: joblib>=1.2
+Requires-Dist: pytest>=7.0
+
+# Customer Churn Prediction – ML Engineering Project
+
+## Problem
+Predict whether a customer will churn based on historical usage and contract data.
+
+## Objective
+Build a reproducible ML pipeline and deploy a trained model as a REST API.
+
+## Tech Stack
+- Python
+- pandas, scikit-learn, XGBoost
+- Docker
+- AWS EC2 + S3
+- FastAPI
+
+## Project Status
+Phase 0 – Project setup
