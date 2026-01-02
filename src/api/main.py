@@ -19,7 +19,7 @@ app = FastAPI(
 # Load artifacts ONCE
 # -----------------------------
 try:
-    MODELS_DIR = PROJECT_ROOT / "artifacts" / "models
+    MODELS_DIR = PROJECT_ROOT / "artifacts" / "models"
     model = joblib.load(ARTIFACTS_DIR / "model.joblib")
     preprocessor = joblib.load(ARTIFACTS_DIR / "preprocessor.joblib")
 except Exception as e:
@@ -50,4 +50,5 @@ def predict(request: ChurnRequest):
     except Exception as e:
         # API-safe error (never expose stack traces)
         raise HTTPException(status_code=500, detail=str(e))
+
 
