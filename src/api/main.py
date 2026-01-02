@@ -4,7 +4,7 @@ import joblib
 
 from src.api.schemas import ChurnRequest, ChurnResponse
 from src.customer_churn_ml_engineering.models.predict import predict_single
-from src.customer_churn_ml_engineering.config import MODELS_DIR
+from src.customer_churn_ml_engineering.config import MODELS_DIR, PROJECT_ROOT
 ARTIFACTS_DIR = MODELS_DIR
 # -----------------------------
 # FastAPI app
@@ -50,5 +50,6 @@ def predict(request: ChurnRequest):
     except Exception as e:
         # API-safe error (never expose stack traces)
         raise HTTPException(status_code=500, detail=str(e))
+
 
 
