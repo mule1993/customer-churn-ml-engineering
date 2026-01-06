@@ -14,7 +14,22 @@ app = FastAPI(
     version="1.0.0",
     description="Predict customer churn using a trained ML model"
 )
-
+#------------------------------
+#health
+#------------------------------
+@app.get("/health", tags=["health"])
+def health_check():
+    """
+    Health check endpoint used by:
+    - Docker
+    - Load balancers
+    - Monitoring systems
+    """
+    return {
+        "status": "ok",
+        "service": "churn-api",
+        "model_loaded": True
+    }
 # -----------------------------
 # Load artifacts ONCE
 # -----------------------------
@@ -50,6 +65,7 @@ def predict(request: ChurnRequest):
     except Exception as e:
         # API-safe error (never expose stack traces)
         raise HTTPException(status_code=500, detail=str(e))
+
 
 
 
