@@ -16,6 +16,9 @@ COPY . .
 # Expose port
 EXPOSE 8000
 
-# Command to run FastAPI
+# Critical for your specific folder structure
+ENV PYTHONPATH=/app/src
 
+# Command to run FastAPI
 CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]
+
