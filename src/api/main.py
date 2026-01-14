@@ -75,7 +75,8 @@ except Exception as e:
 @app.post("/predict", response_model=ChurnResponse)
 def predict(request: ChurnRequest):
     try:
-        logger.info(f"Prediction request received: {data}")
+        #logger.info(f"Prediction request received: {data}")
+        logger.info(f"{request.method} {request.url.path}")
         # 1️⃣ Convert validated input → DataFrame
         input_df = pd.DataFrame([request.dict()])
 
@@ -96,6 +97,7 @@ def predict(request: ChurnRequest):
         # API-safe error (never expose stack traces)
         raise HTTPException(status_code=500, detail=str(e))
         logger.exception("Prediction failed")
+
 
 
 
