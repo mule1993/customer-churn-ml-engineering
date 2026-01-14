@@ -48,10 +48,10 @@ jobs:
             --instance-ids ${{ secrets.EC2_INSTANCE_ID }} \
             --parameters 'commands=[
               "aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com",
-              "docker pull ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/customer-churn-ml-engineering:latest",
+              "docker pull ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/churn-api:latest",
               "docker stop churn-api || true",
               "docker rm churn-api || true",
-              "docker run -d --name churn-api -p 8000:8000 --restart always -e PYTHONPATH=/app/src ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/customer-churn-ml-engineering:latest",
+              "docker run -d --name churn-api -p 8000:8000 --restart always -e PYTHONPATH=/app/src ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/churn-api:latest",
               "docker image prune -f"
             ]' \
             --query "Command.CommandId" \
