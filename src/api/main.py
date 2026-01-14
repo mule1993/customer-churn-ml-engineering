@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 import pandas as pd
 import joblib
 
@@ -96,6 +96,7 @@ def predict(request: ChurnRequest):
         # API-safe error (never expose stack traces)
         raise HTTPException(status_code=500, detail=str(e))
         logger.exception("Prediction failed")
+
 
 
 
