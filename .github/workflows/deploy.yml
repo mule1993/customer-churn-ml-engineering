@@ -52,7 +52,7 @@ jobs:
               "docker stop churn-api || true",
               "docker rm churn-api || true",
               "docker run -d --name churn-api -p 8000:8000 --restart always -e PYTHONPATH=/app/src ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/churn-api:latest",
-              "docker image prune -f"
+              "docker image prune -af"
             ]' \
             --query "Command.CommandId" \
             --output text)
