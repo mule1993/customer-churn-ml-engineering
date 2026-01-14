@@ -17,7 +17,7 @@ app = FastAPI(
 #------------------------------
 #health
 #------------------------------
-@app.get("/health", tags=["health"])
+@app.get("/health")        #, tags=["health"])
 def health_check():
     """
     Health check endpoint used by:
@@ -65,6 +65,7 @@ def predict(request: ChurnRequest):
     except Exception as e:
         # API-safe error (never expose stack traces)
         raise HTTPException(status_code=500, detail=str(e))
+
 
 
 
