@@ -27,20 +27,24 @@ app = FastAPI(
 )
 import time
 @app.middleware("http")
-async def log_requests(request: Request, call_next):
+async def log_predictions(request: Request, call_next):
     start_time = time.time()
-
+    
+    # Process the request
     response = await call_next(request)
-
-    process_time = time.time() - start_time
-
+    
+    # Calculate processing time (Latency)
+    process_time = (time.time() - start_time) * 1000
+    
+    # Log the vital stats
     logger.info(
-        f"{request.method} {request.url.path} "
+        f"path={request.url.path} "
         f"status={response.status_code} "
-        f"time={process_time:.3f}s"
+        f"latency={process_time:.2f}ms"
     )
-
+    
     return response
+    
 logger.info("🚀 Churn API started successfully")
 #------------------------------
 #health
@@ -76,7 +80,7 @@ except Exception as e:
 def predict(request: ChurnRequest):
     try:
         #logger.info(f"Prediction request received: {data}")
-        logger.info(f"{request.method} {request.url.path}")
+        #logger.info(f"{request.method} {request.url.path}")
         # 1️⃣ Convert validated input → DataFrame
         input_df = pd.DataFrame([request.dict()])
 
@@ -97,6 +101,7 @@ def predict(request: ChurnRequest):
         # API-safe error (never expose stack traces)
         raise HTTPException(status_code=500, detail=str(e))
         logger.exception("Prediction failed")
+
 
 
 
