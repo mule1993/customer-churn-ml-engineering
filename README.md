@@ -1,4 +1,6 @@
 # Customer Churn Prediction – ML Engineering Project
+[![CI-CD Churn Prediction](https://github.com/mule1993/customer-churn-ml-engineering/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/mule1993/customer-churn-ml-engineering/actions/workflows/deploy.yml)
+This project automates the deployment of a machine learning model...
 
 ## Problem
 Predict whether a customer will churn based on historical usage and contract data.
