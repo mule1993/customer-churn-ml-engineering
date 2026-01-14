@@ -85,7 +85,7 @@ def predict(request: ChurnRequest):
             model=model,
             preprocessor=preprocessor
         )
-         logger.info(f"Prediction result: {churn_pred}")
+        logger.info(f"Prediction result: {churn_pred}")
         # 3️⃣ Return response
         return ChurnResponse(
             churn_probability=float(churn_proba),
@@ -96,6 +96,7 @@ def predict(request: ChurnRequest):
         # API-safe error (never expose stack traces)
         raise HTTPException(status_code=500, detail=str(e))
         logger.exception("Prediction failed")
+
 
 
 
