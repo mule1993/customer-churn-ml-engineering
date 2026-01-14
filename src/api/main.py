@@ -26,7 +26,7 @@ def health_check():
     - Monitoring systems
     """
     return {
-        "status": "ok",
+        "status": "okey",
         "service": "churn-api",
         "model_loaded": True
     }
@@ -65,6 +65,7 @@ def predict(request: ChurnRequest):
     except Exception as e:
         # API-safe error (never expose stack traces)
         raise HTTPException(status_code=500, detail=str(e))
+
 
 
 
