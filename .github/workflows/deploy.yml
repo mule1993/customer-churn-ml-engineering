@@ -25,7 +25,7 @@ jobs:
       - name: Build and Push Image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPO_NAME: customer-churn-ml-engineering
+          REPO_NAME: churn-api
         run: |
           docker build -t $ECR_REGISTRY/$REPO_NAME:latest .
           docker push $ECR_REGISTRY/$REPO_NAME:latest
