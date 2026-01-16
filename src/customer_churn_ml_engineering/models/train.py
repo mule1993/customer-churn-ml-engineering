@@ -1,5 +1,6 @@
 import pandas as pd
 import joblib
+import os
 import mlflow
 import mlflow.xgboost  # Specialized for XGBoost
 import mlflow.sklearn  # To capture preprocessing and split logic
@@ -13,13 +14,23 @@ from src.customer_churn_ml_engineering.config import MODELS_DIR
 
 def main():
     # --------------------------------------------------
-    # 0️⃣ MLflow Setup
+    # 0️⃣ MLflow Remote Setup (The Bridge)
     # --------------------------------------------------
-    mlflow.set_tracking_uri("sqlite:///mlflow.db")
+    # Replace with your EC2 Public IP or Domain
+    REMOTE_TRACKING_URI = "http://98.91.74.78" 
+    
+    mlflow.set_tracking_uri(REMOTE_TRACKING_URI)
+    
+    # These credentials MUST match what you put in your Nginx .htpasswd file
+    os.environ['MLFLOW_TRACKING_USERNAME'] = "admin" 
+    os.environ['MLFLOW_TRACKING_PASSWORD'] = "your_secret_password"
+    
     mlflow.set_experiment("Customer_Churn_Production")
     
-    # This captures XGBoost params AND sklearn-style fit/predict metrics
-    mlflow.xgboost.autolog(log_models=True) 
+    # Specialized autologging for XGBoost
+    mlflow.xgboost.autolog(log_models=True)
+
+    
 
     # 1️⃣ Load data
     df = load_training_data()
